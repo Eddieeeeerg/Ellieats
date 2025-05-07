@@ -932,7 +932,10 @@ function showDetails(r) {
 
 // ====== HELPER: getFilteredList ======
 function getFilteredList(area, level) {
-  let list = (restaurantData[area] || []).slice();
+  // ▸ if the user picked “🌀 Any”, merge every area first
+  let list = area === 'ANY'
+  ? Object.values(restaurantData).flat().slice()
+    : (restaurantData[area] || []).slice();
  list = list.filter(r => r.avgCost <= budgetLimit); 
   if      (level === 'Healthy')      list = list.filter(r => r.avgCost <= 30000);
   else if (level === 'Less Healthy') list = list.filter(r => r.avgCost > 30000);
