@@ -492,3 +492,7 @@ h2 {
   z-index:5;
 }
 
+/* Winwheel wraps text when you include '\n' or let it flow */
+canvas#paycanvas {
+  white-space: pre-line;
+}
