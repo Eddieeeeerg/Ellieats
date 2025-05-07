@@ -340,7 +340,7 @@ updateUI();                       // first render
 function refreshAreaAvailability(){
   document.querySelectorAll('#areas .card').forEach(card=>{
     const area = card.dataset.area;
-    if(area === 'RANDOM' || area === 'ANY'){ card.style.display=''; return; }
+    if(area === 'RANDOM' || area === 'ALL'){ card.style.display=''; return; }
     const hasCheap = (restaurantData[area]||[])
                      .some(r => r.avgCost <= budgetLimit);
     card.style.display = hasCheap ? '' : 'none';
