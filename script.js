@@ -407,7 +407,7 @@ function buildPayWheel(segmentArr){
      <div class="box">
        <div style="font-size:2rem;
                    position:absolute;
-                   top:-3px;
+                   top:-22px;
                    left:50%;
                    transform:translateX(-50%);
                    color:#ff2e75;">▼</div>
@@ -427,35 +427,29 @@ function buildPayWheel(segmentArr){
     return () => pastelPalette[i++ % pastelPalette.length];
   })();
 
-  /* ---------- Winwheel segments ---------- */
-  const totalW   = segmentArr.reduce((a,b)=>a + b.weight,0);
-  const segments = segmentArr.map(seg => {
-  /* ── split into two balanced lines ───────────────────────── */
-  const words   = seg.label.split(' ');
+ /* ---------- Winwheel segments ---------- */
+const totalW   = segmentArr.reduce((a,b)=>a + b.weight,0);
+const segments = segmentArr.map(seg => {
+  /* smart 2‑line wrap (≤12 chars each line) */
+  const words = seg.label.split(' ');
   let line1 = seg.label, line2 = '';
-
-  for (let i = 1; i < words.length; i++) {
-    const a = words.slice(0, i).join(' ');
-    const b = words.slice(i).join(' ');
-    if (a.length <= 12 && b.length <= 12) {   // ≤ 12 chars per line
-      line1 = a; line2 = b; break;
+  for (let i = 1; i < words.length; i++){
+    const a = words.slice(0,i).join(' ');
+    const b = words.slice(i   ).join(' ');
+    if (a.length <= 12 && b.length <= 12){
+      line1=a; line2=b; break;
     }
   }
-
-  /* ── narrower font + margin keeps text off the rim ───────── */
-  const twoLines   = !!line2;
-  const fontSize   = twoLines ? 12 : 14;      // px
-  const textMargin = twoLines ? 56 : 48;      // move inwards a bit
-
- return {
-  text              : twoLines ? line1 + '\n' + line2 : line1,
-  size              : 360 * seg.weight / totalW,
-  fillStyle         : pickColor(),
-  textFontSize      : twoLines ? 12 : 14,     // a bit smaller
-  textAlignment     : 'outer',
-  textOrientation   : 'curved',               // cuddles the rim
-  textFillStyle     : '#333',
-  textMargin        : twoLines ? 60 : 50      // moves it well inside
+  const two = !!line2;
+  return {
+    text            : two ? `${line1}\n${line2}` : line1,
+    size            : 360 * seg.weight / totalW,
+    fillStyle       : pickColor(),
+    textFontSize    : two ? 12 : 14,      // a touch smaller
+    textAlignment   : 'outer',
+    textOrientation : 'curved',
+    textFillStyle   : '#222',
+    textMargin      : two ? 58 : 52       // tucks text further in
 };
 
 });
