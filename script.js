@@ -401,16 +401,11 @@ function randomOptionals(){
    ╚══════════════════════════════════════════════╝ */
 function buildPayWheel(segmentArr){
   /* ---------- overlay skeleton ---------- */
-  const ov       = document.createElement('div');
-  ov.id          = 'pay-overlay';
-  ov.innerHTML   = `
+  const ov = document.createElement('div');
+  ov.id    = 'pay-overlay';
+  ov.innerHTML = `
      <div class="box">
-       <div style="font-size:2rem;
-                   position:absolute;
-                   top:-22px;
-                   left:50%;
-                   transform:translateX(-50%);
-                   color:#ff2e75;">▼</div>
+       <div class="wheel-pointer">▼</div>
        <canvas id="paycanvas" width="320" height="320"></canvas>
        <button id="pay-close">Close</button>
      </div>`;
@@ -441,17 +436,17 @@ const segments = segmentArr.map(seg => {
     }
   }
   const two = !!line2;
-  return {
-    text            : two ? `${line1}\n${line2}` : line1,
-    size            : 360 * seg.weight / totalW,
-    fillStyle       : pickColor(),
-    textFontSize    : two ? 12 : 14,      // a touch smaller
-    textAlignment   : 'outer',
-    textOrientation : 'curved',
-    textFillStyle   : '#222',
-    textMargin      : two ? 58 : 52       // tucks text further in
-};
+ return {
+  text            : two ? `${line1}\n${line2}` : line1,
+  size            : 360 * seg.weight / totalW,
+  fillStyle       : pickColor(),
 
+  /*  ─ label look ─  */
+  textFontSize    : two ? 14 : 16,     // slightly smaller for two‑line
+  textOrientation : 'horizontal',      // ← no more curved text
+  textAlignment   : 'center',          // centred inside slice
+  textFillStyle   : '#222'
+};
 });
 
   /* ---------- create & spin ---------- */
