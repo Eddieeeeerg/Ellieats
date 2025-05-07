@@ -438,14 +438,15 @@ const segments = segmentArr.map(seg => {
   const two = !!line2;
  return {
   text            : two ? `${line1}\n${line2}` : line1,
-  size            : 360 * seg.weight / totalW,
-  fillStyle       : pickColor(),
-
-  /*  ─ label look ─  */
-  textFontSize    : two ? 14 : 16,     // slightly smaller for two‑line
-  textOrientation : 'horizontal',      // ← no more curved text
-  textAlignment   : 'center',          // centred inside slice
-  textFillStyle   : '#222'
+   size            : 360 * seg.weight / totalW,
+    fillStyle       : pickColor(),
+   /*  ─ label look ─  */
+   textFontSize    : two ? 12 : 14,     // always small & equal
+   textLineHeight  : 18,                // keep the 2 lines apart
+   textMargin      : 15,                // pull text *inward* so it never
+   textOrientation : 'horizontal',      // touches the rim
+   textAlignment   : 'inner',
+   textFillStyle   : '#222'
 };
 });
 
