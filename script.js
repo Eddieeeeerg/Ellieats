@@ -458,7 +458,6 @@ function buildPayWheel(segmentArr){
     textMargin
   };
 });
-);
 
   /* ---------- create & spin ---------- */
   const wheel = new Winwheel({
