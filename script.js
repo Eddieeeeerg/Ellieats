@@ -422,26 +422,30 @@ function buildPayWheel(segmentArr){
     return () => pastelPalette[i++ % pastelPalette.length];
   })();
 
-/* ---------- prepare Winwheel segments ---------- */
-const total = PAY_SEGMENTS.reduce((sum, s) => sum + s.weight, 0);
+/* ---------- prepare Winwheel segments (v3) ---------- */
+const total = PAY_SEGMENTS.reduce((s, p) => s + p.weight, 0);
 const segments = PAY_SEGMENTS.map(seg => {
-  // short version for the wheel face (20 chars + …)
-  const short = seg.label.length > 20
-                ? seg.label.slice(0, 18) + '…'
-                : seg.label;
+  /* drop leading emoji (1st grapheme) for the wheel face */
+  const noEmoji = seg.label.trimStart()
+                           .replace(/^\p{Extended_Pictographic}+/u, '')
+                           .trimStart();
+
+  /* short version shown on the wheel */
+  const short = noEmoji.length > 15 ? noEmoji.slice(0, 13) + '…' : noEmoji;
 
   return {
-    text            : short,          // what Winwheel draws
-    fullLabel       : seg.label,      // keep the complete text for later
+    text            : short,          // draw short label
+    fullLabel       : seg.label,      // keep full sentence for banner
     size            : 360 * seg.weight / total,
     fillStyle       : randPastel(),
-    textFontSize    : 13,             // a hair smaller so nothing touches
+    textFontSize    : 11,             // smaller so it stays inside
     textAlignment   : 'outer',
-    textMargin      : 14,
+    textMargin      : 10,
     textOrientation : 'horizontal',
     textFillStyle   : '#222'
   };
 });
+
 
 
   /* ---------- create & spin ---------- */
