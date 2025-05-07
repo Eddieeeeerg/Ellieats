@@ -171,8 +171,7 @@ $('picker-content').innerHTML = '';
   /* clear any list that might have been shown previously */
   $('picker-content').innerHTML = '';
 
-  /*  🔸 fire the 5 % bill wheel logic right here  */
-  maybeShowPayWheel(winner);
+ 
 }
 
 
@@ -408,7 +407,7 @@ function buildPayWheel(segmentArr){
      <div class="box">
        <div style="font-size:2rem;
                    position:absolute;
-                   top:-10px;
+                   top:-3px;
                    left:50%;
                    transform:translateX(-50%);
                    color:#ff2e75;">▼</div>
@@ -448,16 +447,17 @@ function buildPayWheel(segmentArr){
   const fontSize   = twoLines ? 12 : 14;      // px
   const textMargin = twoLines ? 56 : 48;      // move inwards a bit
 
-  return {
-    text              : twoLines ? line1 + '\n' + line2 : line1,
-    size              : 360 * seg.weight / totalW,
-    fillStyle         : pickColor(),
-    textFontSize      : fontSize,
-    textAlignment     : 'outer',
-    textOrientation   : 'horizontal',
-    textFillStyle     : '#333',
-    textMargin
-  };
+ return {
+  text              : twoLines ? line1 + '\n' + line2 : line1,
+  size              : 360 * seg.weight / totalW,
+  fillStyle         : pickColor(),
+  textFontSize      : twoLines ? 12 : 14,     // a bit smaller
+  textAlignment     : 'outer',
+  textOrientation   : 'curved',               // cuddles the rim
+  textFillStyle     : '#333',
+  textMargin        : twoLines ? 60 : 50      // moves it well inside
+};
+
 });
 
   /* ---------- create & spin ---------- */
@@ -526,8 +526,7 @@ function addPayButton(where, rest){
   btn.onclick = () => launchPayWheel();
   where.appendChild(btn);
 
-  // still honour the automatic chance
-  maybeShowPayWheel(rest);
+
 }
 
 // ====== SPINNING WHEEL v2 ==============================================
@@ -900,7 +899,7 @@ deck = shuffle([
      ov.remove(); 
     resetAll(); 
   };
-    maybeShowPayWheel(rest);
+    
 }
 
 
