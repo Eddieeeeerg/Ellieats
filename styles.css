@@ -483,7 +483,7 @@ h2 {
 /* ===== Bill‑wheel pointer ==================================== */
 .wheel-pointer {
   position: absolute;
-  top: calc(50% - 180px);   /* move down until the tip touches the rim      */
+  top: calc(50% - 172px);   /* move down until the tip touches the rim      */
   left: 50%;
   transform: translateX(-50%);
   font-size: 32px;          /* the little 🎉 you’re using */
