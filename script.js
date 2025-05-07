@@ -422,25 +422,27 @@ function buildPayWheel(segmentArr){
     return () => pastelPalette[i++ % pastelPalette.length];
   })();
 
-/* ---------- prepare Winwheel segments (v3) ---------- */
-const total = PAY_SEGMENTS.reduce((s, p) => s + p.weight, 0);
-const segments = PAY_SEGMENTS.map(seg => {
-  /* drop leading emoji (1st grapheme) for the wheel face */
-  const noEmoji = seg.label.trimStart()
-                           .replace(/^\p{Extended_Pictographic}+/u, '')
-                           .trimStart();
+/* ---------- prepare Winwheel segments ---------- */
+// ① shuffle the slices each spin
+const shuffled = PAY_SEGMENTS
+  .slice()                        // don’t mutate the original
+  .sort(() => Math.random() - 0.5);
 
-  /* short version shown on the wheel */
-  const short = noEmoji.length > 15 ? noEmoji.slice(0, 13) + '…' : noEmoji;
+const total = shuffled.reduce((sum, s) => sum + s.weight, 0);
+const segments = shuffled.map(seg => {
+  // short version for the wheel face (20 chars + …)
+  const short = seg.label.length > 20
+                ? seg.label.slice(0, 18) + '…'
+                : seg.label;
 
   return {
-    text            : short,          // draw short label
-    fullLabel       : seg.label,      // keep full sentence for banner
+    text            : short,          // what Winwheel draws
+    fullLabel       : seg.label,      // keep the complete text for later
     size            : 360 * seg.weight / total,
     fillStyle       : randPastel(),
-    textFontSize    : 11,             // smaller so it stays inside
+    textFontSize    : 13,             // a hair smaller so nothing touches
     textAlignment   : 'outer',
-    textMargin      : 10,
+    textMargin      : 14,
     textOrientation : 'horizontal',
     textFillStyle   : '#222'
   };
@@ -449,13 +451,14 @@ const segments = PAY_SEGMENTS.map(seg => {
 
 
   /* ---------- create & spin ---------- */
-  const wheel = new Winwheel({
-      canvasId    : 'paycanvas',
-      numSegments : segments.length,
-      outerRadius : 150,
-      lineWidth   : 2,
-      pointerAngle: 0,
-      segments,
+ const wheel = new Winwheel({
+  canvasId     : 'paycanvas',
+  numSegments  : segments.length,
+  outerRadius  : 150,
+  lineWidth    : 2,
+  rotationAngle: Math.random() * 360,  // ② random start
+  pointerAngle : 0,
+  segments,
       animation   : {
         type            : 'spinToStop',
         spins           : 5,
