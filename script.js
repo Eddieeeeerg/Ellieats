@@ -8,19 +8,21 @@ let currentArea  = null;   // ← track the user’s picks
 let currentLevel = null;
 const BLANK_STARS = "☆/5";   // default empty rating
 
-/* ─── format a "n/5" string into ★★★☆☆ n/5 ───────────── */
-function renderStars(str){
-  if(!str || str === BLANK_STARS || str.startsWith('-')) return '';
-  const n = parseInt(str, 10);
-  if(isNaN(n) || n < 0 || n > 5) return '';
-  return '★'.repeat(n) + '☆'.repeat(5 - n) + ` ${n}/5`;
-  }
-/* ── average & render two ratings ───────────────────── */
-function avgString(a, b){                   // "3/5" + "4/5" → "3.5/5"
-  const n1 = parseInt(a,10), n2 = parseInt(b,10);
-  if([n1,n2].some(x => isNaN(x))) return BLANK_STARS;   // one or both blank
-  return (Math.round((n1 + n2) / 2)).toString() + "/5";
+/* ─── format "n/5" into ★★★☆☆ (integer only) ─── */
+function renderStars(str) {
+  // blank / placeholder → nothing
+  if (!str || str === BLANK_STARS || str.startsWith('-')) return '';
+
+  // handle "4.7/5" or "4/5" → parseFloat stops at "/"
+  const rating = parseFloat(str);
+  if (isNaN(rating) || rating < 0 || rating > 5) return '';
+
+  const full = Math.floor(rating);                  // 4.7 → 4
+  const stars = '★'.repeat(full) + '☆'.repeat(5 - full);
+
+  return `${stars} ${str}`;                         // e.g. ★★★★☆ 4.7/5
 }
+
 
 
 // ====== PHASE 1: Restaurant Data ======
