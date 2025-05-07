@@ -512,3 +512,8 @@ h2 {
 canvas#paycanvas {
   white-space: pre-line;
 }
+
+.avg-stars         { cursor: pointer; user-select: none; }
+.avg-stars .toggle { font-size: .8rem; margin-left: .25rem; }
+.stars-detail      { font-size: .8rem; margin-top: .3rem; }
+.hidden            { display: none; }
