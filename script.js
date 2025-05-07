@@ -8,6 +8,14 @@ let currentArea  = null;   // ← track the user’s picks
 let currentLevel = null;
 const BLANK_STARS = "☆/5";   // default empty rating
 
+/* ─── format a "n/5" string into ★★★☆☆ n/5 ───────────── */
+function renderStars(str){
+  if(!str || str === BLANK_STARS || str.startsWith('-')) return '';
+  const n = parseInt(str, 10);
+  if(isNaN(n) || n < 0 || n > 5) return '';
+  return '★'.repeat(n) + '☆'.repeat(5 - n) + ` ${n}/5`;
+  }
+
 
 // ====== PHASE 1: Restaurant Data ======
 const restaurantData = {
@@ -40,9 +48,9 @@ const restaurantData = {
       url: "https://naver.me/xmxTi46O",  img: "images/tantan-coex.jpg",
       open: "10:30", close: "22:00", stars: BLANK_STARS, health: "both" },
 
-    { name: "Paulie’s ParnaMall",       category: "fastFood",    avgCost: 55000, weight: 2,
+    { name: "Paulie’s",       category: "fastFood",    avgCost: 55000, weight: 2,
       url: "https://naver.me/x9BsLqUs",  img: "images/paulies-coex.jpg",
-      open: "11:00", close: "22:00", stars: BLANK_STARS, health: "unhealthy" },
+      open: "11:00", close: "22:00", stars: 4/5, health: "unhealthy" },
 
     { name: "Papaya Leaf Coex",         category: "fastFood",    avgCost: 25000, weight: 2,
       url: "https://naver.me/5gFc3fRa",  img: "images/papaya-coex.jpg",
@@ -285,6 +293,7 @@ function refreshAreaAvailability(){
   });
 }
 
+
 /* ─── RESULT‑CARD builder ───────────────────────────────────────────── */
 function makeResultCard(r){
   const div = document.createElement('div');
@@ -294,6 +303,7 @@ function makeResultCard(r){
     <h3>${r.name}</h3>
     <p>Price: ₩${r.avgCost.toLocaleString()}</p>
     <p>Time: ${r.open || '—'} – ${r.close || '—'}</p>
+    ${ renderStars(r.stars) }
     <p><a href="${r.url}" target="_blank">View on Naver</a></p>
   `;
   return div;
