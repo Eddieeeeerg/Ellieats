@@ -64,7 +64,7 @@ const restaurantData = {
     { name: "Paulie’s", category: "fastFood", avgCost: 55000, weight: 2,
       url: "https://naver.me/x9BsLqUs", img: "images/paulies-coex.jpg",
       open: "11:00", close: "22:00",
-      ellieStars: "4.5/5", eddieStars: "4.5/5", health: "unhealthy" },
+      ellieStars: "5/5", eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Papaya Leaf Coex", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/5gFc3fRa", img: "images/papaya-coex.jpg",
@@ -139,12 +139,12 @@ const restaurantData = {
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
 
     { name: "Gatden Sushi (롯데월드몰)", category: "sushi", avgCost: 65000, weight: 2,
-      url: "https://naver.me/GbD8W9vI", img: "images/gatden-jamsil.jpg",
+      url: "https://naver.me/GbD8W9vI", img: "images/gatden-jamsil.jpeg",
       open: "10:30", close: "21:00",
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "healthy" },
 
     { name: "London Bagel Museum (잠실)", category: "bakery", avgCost: 24000, weight: 2,
-      url: "https://naver.me/FZ2AapQi", img: "images/lbm-jamsil.jpeg",
+      url: "https://naver.me/FZ2AapQi", img: "images/lmb-jamsil.jpeg",
       open: "10:30", close: "22:00",
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" }
   ],
@@ -240,7 +240,7 @@ const restaurantData = {
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
 
     { name: "Damsot 왕십리", category: "korean", avgCost: 26000, weight: 2,
-      url: "https://naver.me/5RhJnb5F", img: "images/damsot-wang.jpg",
+      url: "https://naver.me/5RhJnb5F", img: "images/damsot-wang.jpeg",
       open: "11:00", close: "21:00",
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
 
@@ -250,7 +250,7 @@ const restaurantData = {
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
 
     { name: "Benessere 왕십리", category: "italian", avgCost: 35000, weight: 2,
-      url: "https://naver.me/xnhse9NC", img: "images/benessere-wang.jpg",
+      url: "https://naver.me/xnhse9NC", img: "images/benessere-wang.jpeg",
       open: "11:00", close: "20:20",
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" }
   ],
@@ -289,6 +289,8 @@ initBudgetSlider();
 refreshAreaAvailability();
 initMethodChooser();
   $('reset-btn').addEventListener('click', resetAll);
+  // ③ “Back” from Healthy/Less/All screen
+  $('health-back-btn').addEventListener('click', resetAll);
 });
 /***** BUDGET SLIDER *****/
 function initBudgetSlider(){
@@ -614,7 +616,7 @@ const PAY_SEGMENTS = [
   {label:'🐣 Ellie’s too adorable to pay, so Eddie pays (again...)',               weight: 35},
   {label:'💋 Ellie, give Eddie popos so he has the energy to pay',                 weight: 35},
   {label:'🧾 Split the bill, split the love (aww math is romantic now)',           weight: 15},
-  {label:'✂️ Half and half — just like the drama in our relationship',            weight: 25},
+  {label:'✂️ Half and half, just like the drama in our relationship',            weight: 25},
   {label:'🤝 We both pay. Equality wins today.',                                   weight: 22},
   {label:'🧮 Let’s go 50-50, and then 100% dessert',                               weight: 19},
   {label:'🐹 Split the bill… but Ellie pays ₩1 more because she\'s the adult here', weight: 20},
