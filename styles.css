@@ -484,7 +484,7 @@ h2 {
 #pay-overlay .wheel-pointer{
   position:absolute;
   left:50%;
-  top:calc(50% - 170px);   /* 150 px radius + 20 px tip height         */
+  top: calc(50% - 162px);   /* 150 (radius) + 12 (vertical gap) */
   transform:translateX(-50%);
   font-size:32px;          /* ▼ size */
   color:#ff2e75;
