@@ -107,7 +107,7 @@ function initBudgetSlider(){
     90:"Would you stop if I gave you a parrot kiss?",91:"You’re a horrible person right now.",
     92:"Nah, you’re not. I love you so much, Ellie.",93:"I’m offended.",
     94:"So...",95:".....",96:"...I...",97:"...hate...",98:"...YOU...",99:"....😢....",
-    100:"⚠️ Error: Ellie is crazy!",101:"I won’t let you go further."
+    100:"Gnarly",101:"⚠️ Error: Ellie is crazy!"
   };
 
 function updateUI(){
