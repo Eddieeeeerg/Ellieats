@@ -357,30 +357,32 @@ function playSpinSound(){
   snd.currentTime = 0;
   snd.play().catch(()=>{});          // ignore autoplay blocking on some mobiles
 }
-/* === BILL-SPLIT WHEEL ============================================= */
-const PAY_MANDATORY = [
- {label: '50 / 50 split',                                      weight: 25},
-  {label: 'Eddie pays 💸',                                      weight: 35},
-  {label: 'Ellie pays 😬',                                      weight: 5},
-  {label: '🥰 Eddie pays… and gets a long kiss in return',       weight: 25},
-  {label: '🤗 Eddie pays, but you owe him one giant hug',        weight: 25},
-  {label: '💌 Ellie is too cute today, so she doesn’t have to pay', weight: 25},
-  {label: '🧃 Te quiero… y pago yo!',                            weight: 25},
-  {label: '💖 사랑하니까 내가 낼게!',                               weight: 25},
-  {label: '🧾 You pay for the café, but Eddie pays now',        weight: 25},
-  {label: '😘 You pay… but you get a kiss!',                    weight: 15},
-  {label: '🙈 Eddie pays… nooooooo! How did this happen??',      weight: 25},
-  {label: '🐣 Ellie’s too adorable to pay, so Eddie pays (again...)', weight: 35},
-  {label: '💋 Ellie, give Eddie popos so he has the energy to pay',   weight: 35},
-  {label: '🧾 Split the bill, split the love (aww math is romantic now)', weight: 15},
-  {label: '✂️ Half and half — just like the drama in our relationship',  weight: 25},
-  {label: '🤝 We both pay. Equality wins today.',                weight: 22},
-  {label: '🧮 Let’s go 50/50, and then 100% dessert',            weight: 19},
-  {label: '🐹 Split the bill… but Ellie pays ₩1 more because she\'s the adult here', weight: 20},
-  {label: '📉 It’s a financial crisis. We split.',               weight: 25},
-  {label: '⚖️ Both of us pay. Justice has been served.',        weight: 5},
-  {label: '🎲 Split the bill, but Ellie chooses how. (random math is okay)', weight: 25}
+/* Bill‑split wheel : every option + its own weight  */
+const PAY_SEGMENTS = [
+  {label:'50 / 50 split',                                                          weight: 25},
+  {label:'Eddie pays 💸',                                                          weight: 35},
+  {label:'Ellie pays 😬',                                                          weight:  5},
+
+  {label:'🥰 Eddie pays… and gets a long kiss in return',                          weight: 25},
+  {label:'🤗 Eddie pays, but you owe him one giant hug',                           weight: 25},
+  {label:'💌 Ellie is too cute today, so she doesn’t have to pay',                 weight: 25},
+  {label:'🧃 Te quiero… y pago yo!',                                               weight: 25},
+  {label:'💖 사랑하니까 내가 낼게!',                                                 weight: 25},
+  {label:'🧾 You pay for the café, but Eddie pays now',                            weight: 25},
+  {label:'😘 You pay… but you get a kiss!',                                        weight: 15},
+  {label:'🙈 Eddie pays… nooooooo! How did this happen??',                         weight: 25},
+  {label:'🐣 Ellie’s too adorable to pay, so Eddie pays (again...)',               weight: 35},
+  {label:'💋 Ellie, give Eddie popos so he has the energy to pay',                 weight: 35},
+  {label:'🧾 Split the bill, split the love (aww math is romantic now)',           weight: 15},
+  {label:'✂️ Half and half — just like the drama in our relationship',            weight: 25},
+  {label:'🤝 We both pay. Equality wins today.',                                   weight: 22},
+  {label:'🧮 Let’s go 50/50, and then 100% dessert',                               weight: 19},
+  {label:'🐹 Split the bill… but Ellie pays ₩1 more because she\'s the adult here', weight: 20},
+  {label:'📉 It’s a financial crisis. We split.',                                  weight: 25},
+  {label:'⚖️ Both of us pay. Justice has been served.',                            weight:  5},
+  {label:'🎲 Split the bill, but Ellie chooses how. (random math is okay)',        weight: 25}
 ];
+
 
 /* pick 1-3 random optionals */
 function randomOptionals(){
@@ -420,22 +422,17 @@ function buildPayWheel(segmentArr){
     return () => pastelPalette[i++ % pastelPalette.length];
   })();
 
- /* ---------- Winwheel segments ---------- */
-const totalW = segmentArr.reduce((s,t) => s + t.weight, 0);
-const segments = segmentArr.map(seg => {
-  const full = seg.label;                              // ← keep full text
-  const txt  = full.length > 18 ? full.slice(0,15) + '…' : full;
-
-  return {
-    text         : txt,
-    fullLabel    : full,          // ← store full text here
-    size         : 360 * seg.weight / totalW,
-    fillStyle    : pickColor(),
-    textFontSize : 14,
-    textAlignment: 'outer',
-    textFillStyle: '#222'
-  };
-});
+/* ---------- prepare Winwheel segments ---------- */
+const total = PAY_SEGMENTS.reduce((sum, s) => sum + s.weight, 0);
+const segments = PAY_SEGMENTS.map(seg => ({
+  text         : seg.label,             // full text – no truncation
+  size         : 360 * seg.weight / total,
+  fillStyle    : randPastel(),          // use your existing pastel helper
+  textFontSize : 14,
+  textAlignment: 'outer',
+  textMargin   : 12,
+  textFillStyle: '#222'
+}));
 
 
   /* ---------- create & spin ---------- */
@@ -490,10 +487,8 @@ function maybeShowPayWheel(rest){
 }
 
 function launchPayWheel(){
-  // remove any old pay-overlay before building a new one
   document.getElementById('pay-overlay')?.remove();
-  const segments = [...PAY_MANDATORY, ...randomOptionals()];
-  buildPayWheel(segments);
+  buildPayWheel(PAY_SEGMENTS);
 }
 // ─── helper: add Wheel of Pay button to any result screen ───────────
 function addPayButton(where, rest){
