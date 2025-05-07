@@ -64,7 +64,7 @@ const restaurantData = {
     { name: "Paulie’s", category: "fastFood", avgCost: 55000, weight: 2,
       url: "https://naver.me/x9BsLqUs", img: "images/paulies-coex.jpg",
       open: "11:00", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
+      ellieStars: "4.5/5", eddieStars: "4.5/5", health: "unhealthy" },
 
     { name: "Papaya Leaf Coex", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/5gFc3fRa", img: "images/papaya-coex.jpg",
@@ -144,7 +144,7 @@ const restaurantData = {
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "healthy" },
 
     { name: "London Bagel Museum (잠실)", category: "bakery", avgCost: 24000, weight: 2,
-      url: "https://naver.me/FZ2AapQi", img: "images/lbm-jamsil.jpg",
+      url: "https://naver.me/FZ2AapQi", img: "images/lbm-jamsil.jpeg",
       open: "10:30", close: "22:00",
       ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" }
   ],
@@ -340,7 +340,7 @@ updateUI();                       // first render
 function refreshAreaAvailability(){
   document.querySelectorAll('#areas .card').forEach(card=>{
     const area = card.dataset.area;
-    if(area === 'RANDOM' || area === 'ALL'){ card.style.display=''; return; }
+    if(area === 'RANDOM' || area === 'ANY'){ card.style.display=''; return; }
     const hasCheap = (restaurantData[area]||[])
                      .some(r => r.avgCost <= budgetLimit);
     card.style.display = hasCheap ? '' : 'none';
