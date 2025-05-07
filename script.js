@@ -15,6 +15,12 @@ function renderStars(str){
   if(isNaN(n) || n < 0 || n > 5) return '';
   return '★'.repeat(n) + '☆'.repeat(5 - n) + ` ${n}/5`;
   }
+/* ── average & render two ratings ───────────────────── */
+function avgString(a, b){                   // "3/5" + "4/5" → "3.5/5"
+  const n1 = parseInt(a,10), n2 = parseInt(b,10);
+  if([n1,n2].some(x => isNaN(x))) return BLANK_STARS;   // one or both blank
+  return (Math.round((n1 + n2) / 2)).toString() + "/5";
+}
 
 
 // ====== PHASE 1: Restaurant Data ======
@@ -303,9 +309,22 @@ function makeResultCard(r){
     <h3>${r.name}</h3>
     <p>Price: ₩${r.avgCost.toLocaleString()}</p>
     <p>Time: ${r.open || '—'} – ${r.close || '—'}</p>
-    ${ renderStars(r.stars) }
-    <p><a href="${r.url}" target="_blank">View on Naver</a></p>
+    <p class="avg-stars">
+    ${ renderStars( avgString(r.ellieStars, r.eddieStars) ) }
+    <span class="toggle">▼</span>
+     </p>
+      <div class="stars-detail hidden">
+      <p>Ellie’s stars: ${ renderStars(r.ellieStars) }</p>
+      <p>Eddie’s stars: ${ renderStars(r.eddieStars) }</p>
+      </div>
   `;
+  const detail = div.querySelector('.stars-detail');
+const toggle = div.querySelector('.toggle');
+div.querySelector('.avg-stars').onclick = () => {
+  detail.classList.toggle('hidden');
+  toggle.textContent = detail.classList.contains('hidden') ? '▼' : '▲';
+};
+
   return div;
 }
 
