@@ -50,7 +50,7 @@ const restaurantData = {
 
     { name: "Paulie’s",       category: "fastFood",    avgCost: 55000, weight: 2,
       url: "https://naver.me/x9BsLqUs",  img: "images/paulies-coex.jpg",
-      open: "11:00", close: "22:00", stars: 4/5, health: "unhealthy" },
+      open: "11:00", close: "22:00", stars: "4/5", health: "unhealthy" },
 
     { name: "Papaya Leaf Coex",         category: "fastFood",    avgCost: 25000, weight: 2,
       url: "https://naver.me/5gFc3fRa",  img: "images/papaya-coex.jpg",
