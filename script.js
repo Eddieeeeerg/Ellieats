@@ -430,19 +430,22 @@ const shuffled = PAY_SEGMENTS
 
 const total = shuffled.reduce((sum, s) => sum + s.weight, 0);
 const segments = shuffled.map(seg => {
-  // short version for the wheel face (20 chars + …)
-  const short = seg.label.length > 20
-                ? seg.label.slice(0, 18) + '…'
-                : seg.label;
+  /* ① remove every emoji (so nothing piles-up in the centre) */
+  const noEmoji = seg.label.replace(/[\p{Emoji}\u200d\uFE0F]/gu, '').trim();
+
+  /* ② truncate to ≈18 characters and add an ellipsis if needed */
+  const short = noEmoji.length > 18
+                ? noEmoji.slice(0, 16) + '…'
+                : noEmoji;
 
   return {
-    text            : short,          // what Winwheel draws
-    fullLabel       : seg.label,      // keep the complete text for later
+    text            : short,
+    fullLabel       : seg.label,
     size            : 360 * seg.weight / total,
     fillStyle       : randPastel(),
-    textFontSize    : 13,             // a hair smaller so nothing touches
+    textFontSize    : 11,             // a bit smaller
     textAlignment   : 'outer',
-    textMargin      : 14,
+    textMargin      : 18,             // pushes it farther out
     textOrientation : 'horizontal',
     textFillStyle   : '#222'
   };
