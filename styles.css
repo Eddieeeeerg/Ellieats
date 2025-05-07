@@ -326,7 +326,7 @@ h2 {
 /* ==== WHEEL ==== */
 #wheel-wrap{position:relative;width:380px;margin:0 auto;border-radius:50%}
 #wheel-pointer{
-  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
   font-size:2rem;color:#ff4d9b;user-select:none;pointer-events:none;
 }
 .dice-btn,.spin-btn{
