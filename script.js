@@ -8,20 +8,30 @@ let currentArea  = null;   // ← track the user’s picks
 let currentLevel = null;
 const BLANK_STARS = "☆/5";   // default empty rating
 
-/* ─── format "n/5" into ★★★☆☆ (integer only) ─── */
+/* ─── average two “x/5” strings → "n/5" (may include decimals) ─── */
+function avgString(a, b) {
+  const n1 = parseFloat(a);   // "5/5" → 5
+  const n2 = parseFloat(b);   // "4/5" → 4
+  if (isNaN(n1) || isNaN(n2)) return BLANK_STARS;
+
+  const avg = (n1 + n2) / 2;                 // 4.5, 4.0, …
+  const txt = avg % 1 === 0 ? avg : avg.toFixed(1); // "4" or "4.5"
+  return `${txt}/5`;
+}
+
+/* ─── format "n/5" into ★★★☆☆ (integer part only) ─── */
 function renderStars(str) {
-  // blank / placeholder → nothing
   if (!str || str === BLANK_STARS || str.startsWith('-')) return '';
 
-  // handle "4.7/5" or "4/5" → parseFloat stops at "/"
-  const rating = parseFloat(str);
+  const rating = parseFloat(str);            // handles "4.7/5", "4/5"
   if (isNaN(rating) || rating < 0 || rating > 5) return '';
 
-  const full = Math.floor(rating);                  // 4.7 → 4
+  const full  = Math.floor(rating);          // 4.7 → 4
   const stars = '★'.repeat(full) + '☆'.repeat(5 - full);
 
-  return `${stars} ${str}`;                         // e.g. ★★★★☆ 4.7/5
+  return `${stars} ${str}`;                  // e.g. ★★★★☆ 4.7/5
 }
+
 
 
 
@@ -31,7 +41,7 @@ const restaurantData = {
     { name: "KFC Coex Mall", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/GKUf5aQz", img: "images/kfc-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Shake Shack Coex", category: "fastFood", avgCost: 30000, weight: 2,
       url: "https://naver.me/GHvbZ6hz", img: "images/shakeshack-coex.jpg",
@@ -51,17 +61,17 @@ const restaurantData = {
     { name: "McDonald’s Coex Branch", category: "fastFood", avgCost: 22000, weight: 2,
       url: "https://naver.me/GtUQbudg", img: "images/mcdonalds-coex.jpg",
       open: "07:00", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3.5/5", health: "unhealthy" },
 
     { name: "The Malatang Place", category: "fastFood", avgCost: 25000, weight: 2,
       url: "", img: "images/malaton-coex.jpg",
       open: "10:30", close: "20:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "2.5/5", health: "unhealthy" },
 
     { name: "Tantan Noodles Kitchen", category: "noodles", avgCost: 30000, weight: 2,
       url: "https://naver.me/xmxTi46O", img: "images/tantan-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "both" },
 
     { name: "Paulie’s", category: "fastFood", avgCost: 55000, weight: 2,
       url: "https://naver.me/x9BsLqUs", img: "images/paulies-coex.jpg",
@@ -81,54 +91,54 @@ const restaurantData = {
     { name: "GS25 Convenience", category: "convenience", avgCost: 15000, weight: 2,
       url: "", img: "images/gs25-coex.jpg",
       open: "24h", close: "–",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "2.5/5", health: "unhealthy" },
 
     { name: "VATOS ParnasMall", category: "mexican", avgCost: 40000, weight: 2,
       url: "https://naver.me/xUwgER5m", img: "images/vatos-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3.5/5", health: "unhealthy" },
 
     { name: "On The Border Coex", category: "mexican", avgCost: 55000, weight: 1,
       url: "https://naver.me/FRLFrjsS", img: "images/border-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Crispyfresh", category: "fastFood", avgCost: 30000, weight: 2,
       url: "https://naver.me/5z5NJiLZ", img: "images/crispyfresh-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Street Asian Food", category: "noodles", avgCost: 25000, weight: 2,
       url: "https://naver.me/5Bc81qO1", img: "images/streetasian-coex.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "both" },
 
     { name: "Slideshow COEX", category: "street", avgCost: 26000, weight: 2,
       url: "https://naver.me/xKEfQ6a1", img: "images/slideshow-coex.jpg",
       open: "11:00", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" }
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "unhealthy" }
   ],
 
   "Jamsil": [
     { name: "On The Border", category: "mexican", avgCost: 55000, weight: 1,
       url: "https://naver.me/FRLFrjsS", img: "images/border-jamsil.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Brooklyn The Burger Joint", category: "fastFood", avgCost: 45000, weight: 2,
       url: "https://naver.me/5tJuhyqx", img: "images/brooklyn-jamsil.jpg",
       open: "10:30", close: "21:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4.3/5", health: "unhealthy" },
 
     { name: "Oreno Ramen", category: "noodles", avgCost: 30000, weight: 2,
       url: "https://naver.me/FRLFr9WT", img: "images/oreno-jamsil.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "2.7/5", health: "both" },
 
     { name: "Hankookjib Bibimbap", category: "korean", avgCost: 30000, weight: 2,
       url: "", img: "images/hankookjib-jamsil.jpg",
       open: "10:30", close: "21:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "healthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3.5/5", health: "healthy" },
 
     { name: "Dimdimseom", category: "chinese", avgCost: 25000, weight: 1,
       url: "https://naver.me/FjbpxnN8", img: "images/dimdimseom-jamsil.jpg",
@@ -138,34 +148,34 @@ const restaurantData = {
     { name: "Cheese Room × Tasting Room", category: "fastFood", avgCost: 55000, weight: 1,
       url: "https://naver.me/5HkgUHAO", img: "images/cheeseroom-jamsil.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4.3/5", health: "unhealthy" },
 
     { name: "Gatden Sushi (롯데월드몰)", category: "sushi", avgCost: 65000, weight: 2,
       url: "https://naver.me/GbD8W9vI", img: "images/gatden-jamsil.jpeg",
       open: "10:30", close: "21:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "healthy" },
+      ellieStars: BLANK_STARS, eddieStars: "5/5", health: "healthy" },
 
     { name: "London Bagel Museum (잠실)", category: "bakery", avgCost: 24000, weight: 2,
       url: "https://naver.me/FZ2AapQi", img: "images/lmb-jamsil.jpeg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" }
+      ellieStars: BLANK_STARS, eddieStars: "4.5/5", health: "both" }
   ],
 
   "DDP": [
     { name: "Chinese Restaurant DunDun", category: "chinese", avgCost: 35000, weight: 2,
       url: "", img: "images/chinese-ddp.jpg",
       open: "11:00", close: "20:30",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "both" },
 
     { name: "Mom’s Touch LAB DDP", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/G2EaHsY7", img: "images/momstouch-ddp.jpg",
       open: "11:00", close: "20:30",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Ashley Buffet", category: "buffet", avgCost: 55000, weight: 1,
       url: "https://naver.me/F74dxrPc", img: "images/ashley-ddp.jpg",
       open: "11:00", close: "21:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "5/5", health: "both" },
 
     { name: "Momoya DDP", category: "noodles", avgCost: 30000, weight: 2,
       url: "https://naver.me/5UEpdyY4", img: "images/momoya-ddp.jpg",
@@ -182,32 +192,32 @@ const restaurantData = {
     { name: "Hukuchyo Ramen", category: "noodles", avgCost: 25000, weight: 2,
       url: "https://naver.me/FMcIVDaJ", img: "images/hukuchyo-sang.jpg",
       open: "11:00", close: "21:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "both" },
 
     { name: "Burger King", category: "fastFood", avgCost: 20000, weight: 2,
       url: "https://naver.me/GsjFdVkt", img: "images/bk-sang.jpg",
       open: "10:00", close: "23:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "unhealthy" },
 
     { name: "Shenghuo Malatang", category: "street", avgCost: 20000, weight: 2,
       url: "https://naver.me/5mItTbzT", img: "images/malatang-sang.jpg",
       open: "10:30", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "unhealthy" },
 
     { name: "Ssadagimbab", category: "fastFood", avgCost: 20000, weight: 1,
       url: "https://naver.me/GV2qZhwB", img: "images/ssadagimbab-sang.jpg",
       open: "08:00", close: "21:30",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3.5/5", health: "unhealthy" },
 
-    { name: "Starbucks Yogurt Dinner", category: "cafe", avgCost: 10000, weight: 1,
+    { name: "Starbucks Yogurt Dinner", category: "cafe", avgCost: 20000, weight: 1,
       url: "https://naver.me/FK5VcDbY", img: "images/starbucks-sang.jpg",
       open: "07:00", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "2.5/5", health: "both" },
 
     { name: "CU Near Your House", category: "convenience", avgCost: 15000, weight: 1,
       url: "", img: "images/cu-sang.jpg",
       open: "24h", close: "–",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" }
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "unhealthy" }
   ],
 
   "Wangsimni": [
@@ -224,22 +234,22 @@ const restaurantData = {
     { name: "ELLUI PIZZA", category: "fastFood", avgCost: 37000, weight: 2,
       url: "https://naver.me/GQ1D47cu", img: "images/ellui-wang.jpg",
       open: "16:30", close: "01:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Chinese Restaurant Wang", category: "chinese", avgCost: 30000, weight: 2,
       url: "", img: "images/chinese-wang.jpg",
       open: "11:00", close: "21:30",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "both" },
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "both" },
 
     { name: "Slowcali Poke & Grill", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/FmfDg5Ta", img: "images/slowcali-wang.jpg",
       open: "11:00", close: "20:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4.5/5", health: "unhealthy" },
 
     { name: "Preppers Diet Food", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/xX71r0sK", img: "images/preppers-wang.jpg",
       open: "11:00", close: "22:50",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "3.5/5", health: "unhealthy" },
 
     { name: "Damsot 왕십리", category: "korean", avgCost: 26000, weight: 2,
       url: "https://naver.me/5RhJnb5F", img: "images/damsot-wang.jpeg",
@@ -261,24 +271,24 @@ const restaurantData = {
     { name: "Outdark", category: "fastFood", avgCost: 25000, weight: 2,
       url: "https://naver.me/FLy4Dw8Q", img: "images/outdark-hong.jpg",
       open: "16:00", close: "00:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" }
+      ellieStars: BLANK_STARS, eddieStars: "5/5", health: "unhealthy" }
   ],
 
   "Itaewon": [
     { name: "Alpedo Kebab", category: "street", avgCost: 35000, weight: 2,
       url: "https://naver.me/Gmby953H", img: "images/alpedo-itae.jpg",
       open: "00:00", close: "24:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4/5", health: "unhealthy" },
 
     { name: "Ankara Picnic", category: "street", avgCost: 25000, weight: 2,
       url: "https://naver.me/xiqd2J2S", img: "images/ankara-itae.jpg",
       open: "11:00", close: "22:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" },
+      ellieStars: BLANK_STARS, eddieStars: "4.5/5", health: "unhealthy" },
 
     { name: "Subway Itaewon Station", category: "fastFood", avgCost: 25000, weight: 1,
       url: "https://naver.me/53lCXp4Z", img: "images/subway-itae.jpg",
       open: "00:00", close: "24:00",
-      ellieStars: BLANK_STARS, eddieStars: BLANK_STARS, health: "unhealthy" }
+      ellieStars: BLANK_STARS, eddieStars: "3/5", health: "unhealthy" }
   ]
 };
 
