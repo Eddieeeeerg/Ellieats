@@ -423,31 +423,23 @@ function buildPayWheel(segmentArr){
   })();
 
  /* ---------- Winwheel segments ---------- */
-const totalW   = segmentArr.reduce((a,b)=>a + b.weight,0);
-const segments = segmentArr.map(seg => {
-  /* smart 2‑line wrap (≤12 chars each line) */
-  const words = seg.label.split(' ');
-  let line1 = seg.label, line2 = '';
-  for (let i = 1; i < words.length; i++){
-    const a = words.slice(0,i).join(' ');
-    const b = words.slice(i   ).join(' ');
-    if (a.length <= 12 && b.length <= 12){
-      line1=a; line2=b; break;
-    }
-  }
-  const two = !!line2;
- return {
-  text            : two ? `${line1}\n${line2}` : line1,
-   size            : 360 * seg.weight / totalW,
+const totalW = segmentArr.reduce((s,t) => s + t.weight, 0);
+const segments = segmentArr.map((seg, i) => {
+  // ✂️ hard-truncate → max 18 visible chars
+  let txt = seg.label.length > 18
+            ? seg.label.slice(0,15) + '…'
+            : seg.label;
+  return {
+    text            : txt,
+    size            : 360 * seg.weight / totalW,
     fillStyle       : pickColor(),
-   /*  ─ label look ─  */
-   textFontSize    : two ? 12 : 14,     // always small & equal
-   textLineHeight  : 18,                // keep the 2 lines apart
-   textMargin      : 15,                // pull text *inward* so it never
-   textOrientation : 'horizontal',      // touches the rim
-   textAlignment   : 'inner',
-   textFillStyle   : '#222'
-};
+    /* label style */
+    textFontSize    : 14,            // uniform small font
+    textAlignment   : 'outer',       // hug the rim
+    textOrientation : 'horizontal',
+    textMargin      : 8,             // clear of the border
+    textFillStyle   : '#222'
+  };
 });
 
   /* ---------- create & spin ---------- */
