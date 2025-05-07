@@ -36,6 +36,22 @@ h2 {
   cursor: pointer;
   transition: transform .2s, box-shadow .2s;
 }
+
+/* grey-out unusable Healthy / Less-Healthy cards */
+.card.disabled {
+  filter: grayscale(100%);
+  opacity: .45;
+  pointer-events: none;     /* no clicks */
+  cursor: default;
+}
+.card.disabled small {
+  display: block;
+  margin-top: .3rem;
+  font-size: .75rem;
+  color: #555;
+}
+
+
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 12px rgba(214, 51, 108, 0.3);
