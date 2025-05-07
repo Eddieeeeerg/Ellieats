@@ -424,15 +424,24 @@ function buildPayWheel(segmentArr){
 
 /* ---------- prepare Winwheel segments ---------- */
 const total = PAY_SEGMENTS.reduce((sum, s) => sum + s.weight, 0);
-const segments = PAY_SEGMENTS.map(seg => ({
-  text         : seg.label,             // full text – no truncation
-  size         : 360 * seg.weight / total,
-  fillStyle    : randPastel(),          // use your existing pastel helper
-  textFontSize : 14,
-  textAlignment: 'outer',
-  textMargin   : 12,
-  textFillStyle: '#222'
-}));
+const segments = PAY_SEGMENTS.map(seg => {
+  // short version for the wheel face (20 chars + …)
+  const short = seg.label.length > 20
+                ? seg.label.slice(0, 18) + '…'
+                : seg.label;
+
+  return {
+    text            : short,          // what Winwheel draws
+    fullLabel       : seg.label,      // keep the complete text for later
+    size            : 360 * seg.weight / total,
+    fillStyle       : randPastel(),
+    textFontSize    : 13,             // a hair smaller so nothing touches
+    textAlignment   : 'outer',
+    textMargin      : 14,
+    textOrientation : 'horizontal',
+    textFillStyle   : '#222'
+  };
+});
 
 
   /* ---------- create & spin ---------- */
