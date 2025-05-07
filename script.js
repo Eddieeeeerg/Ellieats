@@ -359,29 +359,27 @@ function playSpinSound(){
 }
 /* === BILL-SPLIT WHEEL ============================================= */
 const PAY_MANDATORY = [
-  {label:'50 / 50 split', weight:30},
-  {label:'Eddie pays 💸',   weight:25},
-  {label:'Ellie pays 😬',    weight: 10}
-];
-const PAY_OPTIONAL = [
-  '🥰 Eddie pays... and gets a long kiss in return',
-  '🤗 Eddie pays, but you owe him one giant hug',
-  '💌 Ellie is too cute today, so she doesn’t have to pay',
-  '🧃 Te quiero… y pago yo!',
-  '💖 사랑하니까 내가 낼게!',
-  '🧾 You pay for the café, but Eddie pays now',
-  '😘 You pay... but you get a kiss!',
-  '🙈 Eddie pays... nooooooo! How did this happen??',
-  '🐣 Ellie’s too adorable to pay, so Eddie pays (again...)',
-  '💋 Ellie, give Eddie popos so he has the energy to pay',
-  '🧾 Split the bill, split the love (aww math is romantic now)',
-'✂️ Half and half — just like the drama in our relationship',
-'🤝 We both pay. Equality wins today.',
-'🧮 Let’s go 50/50, and then 100% dessert',
-'🐹 Split the bill... but Ellie pays ₩1 more because she\'s the adult here',
-'📉 It’s a financial crisis. We split.',
-'⚖️ Both of us pay. Justice has been served.',
-'🎲 Split the bill, but Ellie chooses how. (random math is okay)'
+ {label: '50 / 50 split',                                      weight: 25},
+  {label: 'Eddie pays 💸',                                      weight: 35},
+  {label: 'Ellie pays 😬',                                      weight: 5},
+  {label: '🥰 Eddie pays… and gets a long kiss in return',       weight: 25},
+  {label: '🤗 Eddie pays, but you owe him one giant hug',        weight: 25},
+  {label: '💌 Ellie is too cute today, so she doesn’t have to pay', weight: 25},
+  {label: '🧃 Te quiero… y pago yo!',                            weight: 25},
+  {label: '💖 사랑하니까 내가 낼게!',                               weight: 25},
+  {label: '🧾 You pay for the café, but Eddie pays now',        weight: 25},
+  {label: '😘 You pay… but you get a kiss!',                    weight: 15},
+  {label: '🙈 Eddie pays… nooooooo! How did this happen??',      weight: 25},
+  {label: '🐣 Ellie’s too adorable to pay, so Eddie pays (again...)', weight: 35},
+  {label: '💋 Ellie, give Eddie popos so he has the energy to pay',   weight: 35},
+  {label: '🧾 Split the bill, split the love (aww math is romantic now)', weight: 15},
+  {label: '✂️ Half and half — just like the drama in our relationship',  weight: 25},
+  {label: '🤝 We both pay. Equality wins today.',                weight: 22},
+  {label: '🧮 Let’s go 50/50, and then 100% dessert',            weight: 19},
+  {label: '🐹 Split the bill… but Ellie pays ₩1 more because she\'s the adult here', weight: 20},
+  {label: '📉 It’s a financial crisis. We split.',               weight: 25},
+  {label: '⚖️ Both of us pay. Justice has been served.',        weight: 5},
+  {label: '🎲 Split the bill, but Ellie chooses how. (random math is okay)', weight: 25}
 ];
 
 /* pick 1-3 random optionals */
