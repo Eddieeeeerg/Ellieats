@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ellie & Eddie’s Dinner Dates 💖</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Ellie & Eddie’s Dinner Dates 💖</h1>
+  </header>
+
+  <main>
+    <!-- Phase 1: Area selection -->
+    <section id="area-section">
+      <h2>Where do you want to eat?</h2>
+      <!-- 💸 BUDGET SLIDER (only shows on this first page) -->
+<div id="budget-container">
+  <label for="budget-slider">
+    💸 Budget:
+    <span id="budget-display">35 000₩</span>
+  </label><br>
+  <input type="range" id="budget-slider"
+         min="10" max="101" step="1" value="35">
+  <p id="budget-message" class="budget-msg">Medium-range price</p>
+</div>
+      <div id="areas" class="grid"></div>
+    </section>
+
+    <!-- Phase 2: Health-level selection -->
+    <section id="category-section" hidden>
+      <h2>Healthy or Less Healthy?</h2>
+      <div id="health-options" class="grid"></div>
+    </section>
+
+
+
+  </main>
+  <!-- ====== PHASE 3: Method Chooser ====== -->
+<section id="method-section" hidden>
+  <h2>How should we choose?</h2>
+  <div id="method-buttons" class="method-grid">
+    <button data-method="wheel">🌀<br>Wheel</button>
+    <button data-method="random">🎲<br>Random</button>
+    <button data-method="cards">🃏<br>Cards</button>
+    <button data-method="list">📋<br>All</button>
+  </div>
+</section>
+
+  <!-- ====== PHASE 4: Picker Output ====== -->
+<section id="picker-section" hidden>
+  <h2 id="picker-title"></h2>
+
+  <!-- spinning wheel -->
+  <div id="wheel-wrap" hidden>
+    <div id="wheel-pointer">▼</div>
+    <canvas id="wheelcanvas" width="380" height="380"></canvas>
+  </div>
+
+  <!-- wheel output -->
+  <div id="picker-container"></div>
+
+  <!-- random/card output -->
+  <div id="picker-content"></div>
+
+  <!-- controls -->
+  <button id="back-btn" class="primary">← Back</button>
+  <button id="reset-btn">Start Over</button>
+</section>
+
+<!-- Winwheel.js for the spinning wheel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Winwheel.js/2.7.0/Winwheel.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.6.1/gsap.min.js"></script>
+
+<!-- jQuery + wScratchPad for real scratch cards -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/wScratchPad@2.1.1/dist/wScratchPad.min.js"></script>
+  
+  <script src="script.js" defer></script>
+  <!-- Wheel libs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/zarocknz/javascript-winwheel@2.8/Winwheel.min.js"></script>
+<audio id="spin-audio" src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-wheel-spin-1933.mp3" preload="auto"></audio>
+<!-- overlay root (bill‑wheel & prize pop‑ups are injected here) -->
+<div id="overlay-root"></div>
+
+</body>
+</html>
+

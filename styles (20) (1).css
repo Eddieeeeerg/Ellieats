@@ -1,0 +1,492 @@
+/* Reset & typography */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #ffeef8;
+  color: #333;
+  padding: 20px;
+}
+header h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #d6336c;
+  font-size: 2.4rem;
+}
+h2 {
+  color: #c12f5b;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+/* Grid layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+}
+
+/* Card styles */
+.card {
+  background-color: #fff0f6;
+  border: 2px solid #fcb1cc;
+  border-radius: 12px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(214, 51, 108, 0.3);
+}
+.card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.card p {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #a61e4d;
+}
+
+/* Phase spacing */
+#category-section { margin-top: 40px; }
+#picker-section { margin-top: 40px; text-align: center; }
+#picker-container { margin: 20px 0; }
+#reset-btn {
+  background: #d6336c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+#reset-btn:hover { background: #a61e4d; }
+/* ensure card imgs fill their container */
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* scratch boxes grid */
+#picker-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+.scratch-box {
+  width: 100px;
+  height: 100px;
+  background: #ffe;
+  border: 2px solid #f88;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+/* flip-card grid */
+.card-flip {
+  width: 100px;
+  height: 140px;
+  background: #eef;
+  border: 2px solid #88f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  cursor: pointer;
+}
+/* ─── Wheel Canvas ───────────────────────────────────────────────────────── */
+#wheelcanvas {
+  max-width: 100%;
+  border: 4px solid #e91e63;
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+}
+#wheelcanvas {
+  background-color: white;
+}
+
+/* ─── Scratch Boxes ───────────────────────────────────────────────────────── */
+.scratch-box {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 16px auto;
+  border: 3px solid #e91e63;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fffbea;
+}
+.scratch-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.scratch-box img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.scratch-box > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+.scratch-box > div {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+/* ─── Flipping Cards ──────────────────────────────────────────────────────── */
+.card-flip {
+  width: 140px;
+  height: 180px;
+  margin: 8px;
+  perspective: 600px;
+  display: inline-block;
+}
+.card-flip .front,
+.card-flip .back {
+  width: 100%;
+  height: 100%;
+  border: 2px solid #e91e63;
+  border-radius: 8px;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2em;
+  background: white;
+}
+.card-flip .back {
+  transform: rotateY(180deg);
+  flex-direction: column;
+  padding: 8px;
+  text-align: center;
+}
+.card-flip.flipped .front { transform: rotateY(180deg); }
+.card-flip.flipped .back  { transform: rotateY(0deg); }
+
+/* ─── Details Panel ───────────────────────────────────────────────────────── */
+.details {
+  text-align: center;
+  max-width: 300px;
+  margin: 0 auto;
+}
+.details img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+
+/* === Details panel === */
+.details {
+  text-align: center;
+}
+.details img {
+  max-width: 80%; border-radius: 8px; margin-bottom: 0.5rem;
+}
+
+/* make sure flipped‐card backs keep their image inside the card */
+.card-flip .back img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+/* ───── Flipped‐card images stay inside ─────────────────────────────────── */
+.card-flip .back img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* ───── Scratch‐box layering ───────────────────────────────────────────── */
+.scratch-box img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.scratch-box > div {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 2;
+}
+
+/* ───── Wheel canvas background ────────────────────────────────────────── */
+#wheelcanvas {
+  background-color: white;
+}
+/* ───── Flipped‐card images stay inside ─────────────────────────────────── */
+.card-flip .back img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: cover;
+}
+
+/* ───── Scratch‐box layering ───────────────────────────────────────────── */
+.scratch-box img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+.scratch-box > div {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 2;
+}
+
+/* ───── Wheel canvas background ────────────────────────────────────────── */
+#wheelcanvas {
+  background-color: white;
+}
+
+/* === HEART BUBBLES === */
+.heart-bubble {
+  position: fixed;
+  bottom: -40px;                 /* start just below viewport */
+  font-size: 32px;               /* 💖 emoji size */
+  pointer-events: none;          /* don’t block clicks */
+  animation: floatUp 4s ease-out forwards;
+  z-index: 9999;                 /* always on top */
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0)   scale(1);   opacity: 1; }
+  80%  { transform: translateY(-90vh) scale(1.4); opacity: 1; }
+  100% { transform: translateY(-100vh) scale(1.4); opacity: 0; }
+}
+
+/* ==== BUDGET SLIDER ==== */
+#budget-container{margin:1.2rem auto 2rem;text-align:center}
+#budget-slider{width:80%;max-width:420px;appearance:none;height:6px;border-radius:3px;background:#ff9ec4;outline:none}
+#budget-slider::-webkit-slider-thumb{appearance:none;width:24px;height:24px;border-radius:50%;background:#ff4d9b;cursor:pointer}
+#budget-display{font-weight:700;margin-left:.25rem}
+.budget-msg{margin:.4rem auto 0;font-size:.9rem;color:#c41f66}
+
+/* ==== METHOD CHOOSER ==== */
+.method-grid{
+  display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin:1.5rem 0;
+}
+.method-grid button{
+  width:100px;height:100px;border-radius:15px;border:3px solid #ff4d9b;
+  background:#fff;font-size:1.8rem;line-height:1.2;cursor:pointer;
+  transition:transform .2s;
+}
+.method-grid button:hover{transform:scale(1.08);}
+
+/* ==== PICKER OUTPUT ==== */
+#picker-content{display:flex;flex-wrap:wrap;gap:1.25rem;justify-content:center}
+.result-card{
+  width:260px;border:3px solid #ff4d9b;border-radius:16px;padding:.7rem;text-align:center;
+}
+.result-card img{width:100%;border-radius:12px;margin-bottom:.5rem;object-fit:cover;height:160px}
+.result-card a{color:#0645AD;text-decoration:underline}
+
+#wheelcanvas{display:none;margin:0 auto}
+.dice-btn,.spin-btn{
+  margin:.8rem auto;padding:.6rem 1.2rem;font-size:1rem;border-radius:12px;
+  border:3px solid #ff4d9b;background:#fff;cursor:pointer;transition:transform .15s;
+}
+.dice-btn:hover,.spin-btn:enabled:hover{transform:scale(1.07);}
+.spin-btn:disabled{opacity:.4;cursor:default}
+
+/* ==== WHEEL ==== */
+#wheel-wrap{position:relative;width:380px;margin:0 auto;border-radius:50%}
+#wheel-pointer{
+  position:absolute;top:-18px;left:50%;transform:translateX(-50%);
+  font-size:2rem;color:#ff4d9b;user-select:none;pointer-events:none;
+}
+.dice-btn,.spin-btn{
+  display:block;margin:0.9rem auto;padding:0.6rem 1.4rem;font-size:1.1rem;
+  border:3px solid #ff4d9b;border-radius:14px;background:#fff;cursor:pointer;
+  transition:transform .15s;
+}
+.dice-btn:hover,.spin-btn:enabled:hover{transform:scale(1.08);}
+.spin-btn:disabled{opacity:.4;cursor:default}
+
+#wheel-result{margin-top:1rem}
+/* wheel polish */
+.spin-btn{min-width:130px}
+#wheel-result{margin-top:1rem}
+
+/* wheel glow while spinning */
+#wheel-wrap.spinning{
+  box-shadow:0 0 18px 6px rgba(255,51,119,.6);
+  transition:box-shadow .25s;
+}
+/* little +1 badge */
+@keyframes plusOne {
+  0%   {transform:translate(-50%,-80px) scale(.3);opacity:0}
+  20%  {opacity:1}
+  80%  {transform:translate(-50%,-140px) scale(1);opacity:1}
+ 100%  {opacity:0}
+}
+.plus-one{
+  position:absolute;left:50%;top:0;
+  font-size:2rem;color:#ff2e75;pointer-events:none;
+  animation:plusOne 1.4s ease-out forwards;
+}
+
+/* clover pop */
+@keyframes clover{0%{transform:translate(-50%,-50%) scale(.2);opacity:0}
+30%{opacity:1}100%{transform:translate(-50%,-160%) scale(1.2);opacity:0}}
+#lucky-msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+           font-size:1.4rem;color:#16a34a;pointer-events:none;
+           animation:clover 1.6s ease-out forwards;}
+
+/* === Card grid ===================================================== */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+  gap:1rem;justify-items:center;max-width:760px;margin:0 auto;
+}
+.card-flip{
+  position:relative;width:120px;height:150px;
+  transform-style:preserve-3d;transition:transform .6s ease;
+  cursor:pointer;
+}
+.card-flip.flipped{transform:rotateY(180deg);}
+.card-flip .face{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  backface-visibility:hidden;border:2px solid hotpink;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;font-size:3rem;
+}
+.card-flip .back{
+  transform:rotateY(180deg);padding:.3rem;text-align:center;
+}
+.card-flip img{width:100%;height:80px;object-fit:cover;border-radius:4px;}
+/* winner zoom */
+.card-flip.winner{transform:scale(1.2) rotateY(180deg);z-index:10;}
+/* overlay for prize message */
+#card-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.55);
+  display:flex;align-items:center;justify-content:center;z-index:20;
+}
+#card-overlay .box{
+  background:#fff;border-radius:12px;padding:1.8rem 2.2rem;
+  max-width:280px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+#card-overlay button{margin-top:1rem;}
+
+/* --- keep cards face‑up after flip ---------------------------------- */
+.card-flip:not(.flipped) .back      { visibility:hidden; }
+.card-flip.flipped      .front,
+.card-flip.winner       .front      { visibility:hidden; }
+.card-flip.flipped      .back,
+.card-flip.winner       .back       { visibility:visible; }
+
+/* ───── CARD FLIP – permanent face‑up & mobile sizing ──────────────── */
+.card-grid{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:1rem;
+  max-width:800px;
+  margin:0 auto;
+}
+
+.card-flip{
+  position:relative;
+  width:120px;height:170px;
+  perspective:1000px;
+}
+
+@media (max-width:500px){            /* nicer on phone */
+  .card-flip{width:95px;height:135px;}
+}
+
+/* hide / show faces once .flipped stays on -------------------------------- */
+.card-flip:not(.flipped) .back      {visibility:hidden;}
+.card-flip.flipped      .front,
+.card-flip.winner       .front      {visibility:hidden;}
+.card-flip.flipped      .back,
+.card-flip.winner       .back       {visibility:visible;transform:rotateY(180deg);}
+
+#paywheel{box-shadow:0 0 18px rgba(255,132,215,.7);border-radius:50%;}
+#card-overlay{ z-index:9999; }     /* makes prize / pay overlays top‑most */
+
+/* Pay‑wheel must be above every other overlay */
+#pay-overlay{
+  z-index: 10000;          /* higher than #card‑overlay (9 999)             */
+}
+
+/* ==== BILL‑WHEEL OVERLAY ============================================ */
+#pay-overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex; align-items:center; justify-content:center;
+  z-index:9999;
+}
+#pay-overlay .box{
+  background:#fff; padding:2rem 2.4rem; border-radius:14px;
+  box-shadow:0 10px 28px rgba(0,0,0,.35); text-align:center;
+}
+#paycanvas{
+  width:320px; height:320px; display:block; margin:0 auto 1rem;
+  border:4px solid #ff4d9b; border-radius:50%;
+  box-shadow:0 0 22px rgba(255, 132, 215,.8);
+}
+/* …existing wheel‑overlay css… */
+/* ensure the pay-wheel face is white */
+#paycanvas {
+  background: #fff;
+}
+
+/* Pay-wheel must always float on top of card-overlay */
+#pay-overlay {
+  z-index: 11000;
+}
+
+/* show segment labels for the pay‑wheel */
+#paycanvas + .winwheelLabel {
+  font-weight: 700;
+}
+
+/* pay‑wheel must float on top of everything */
+#pay-overlay            { z-index: 11000; }
+#pay-overlay .box       { position: relative; }   /* so the arrow stays */
+
+/* ===== Bill‑wheel pointer ==================================== */
+.wheel-pointer {
+  position: absolute;
+  top: calc(50% - 180px);   /* move down until the tip touches the rim      */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 32px;          /* the little 🎉 you’re using */
+  pointer-events: none;
+  z-index: 5;
+}
+
