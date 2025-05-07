@@ -424,23 +424,21 @@ function buildPayWheel(segmentArr){
 
  /* ---------- Winwheel segments ---------- */
 const totalW = segmentArr.reduce((s,t) => s + t.weight, 0);
-const segments = segmentArr.map((seg, i) => {
-  // ✂️ hard-truncate → max 18 visible chars
-  let txt = seg.label.length > 18
-            ? seg.label.slice(0,15) + '…'
-            : seg.label;
+const segments = segmentArr.map(seg => {
+  const full = seg.label;                              // ← keep full text
+  const txt  = full.length > 18 ? full.slice(0,15) + '…' : full;
+
   return {
-    text            : txt,
-    size            : 360 * seg.weight / totalW,
-    fillStyle       : pickColor(),
-    /* label style */
-    textFontSize    : 14,            // uniform small font
-    textAlignment   : 'outer',       // hug the rim
-    textOrientation : 'horizontal',
-    textMargin      : 8,             // clear of the border
-    textFillStyle   : '#222'
+    text         : txt,
+    fullLabel    : full,          // ← store full text here
+    size         : 360 * seg.weight / totalW,
+    fillStyle    : pickColor(),
+    textFontSize : 14,
+    textAlignment: 'outer',
+    textFillStyle: '#222'
   };
 });
+
 
   /* ---------- create & spin ---------- */
   const wheel = new Winwheel({
@@ -459,7 +457,7 @@ const segments = segmentArr.map((seg, i) => {
           box.insertAdjacentHTML(
             'afterbegin',
             `<p style="font-weight:700;font-size:1.2rem;margin-bottom:.8rem">
-               ${seg.text} 🎉
+               ${seg.fullLabel} 🎉
              </p>`
           );
         }
