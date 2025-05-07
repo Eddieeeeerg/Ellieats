@@ -306,13 +306,27 @@ function chooseHealth(area) {
   container.innerHTML = '';
 
   ['Healthy', 'Less Healthy', 'All'].forEach(level => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.textContent = level;
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.textContent = level;
+
+  // ▸ check if any restaurants match this level + budget
+  const hasOptions = getFilteredList(area, level).length;
+
+  if (!hasOptions) {
+    card.classList.add('disabled');
+    card.innerHTML = `
+      ${level}
+      <small>There are no ${level.toLowerCase()} options<br>
+             at this price 😢</small>`;
+  } else {
     card.onclick = () => startPicker(area, level);
-    container.appendChild(card);
-  });
-}
+  }
+
+  container.appendChild(card);
+});
+  }
+
 // ====== PHASE 3: show the Method Chooser ======
 function startPicker(area, level) {
   currentArea  = area;
