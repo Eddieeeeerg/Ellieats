@@ -359,7 +359,7 @@ function playSpinSound(){
 }
 /* Bill‑split wheel : every option + its own weight  */
 const PAY_SEGMENTS = [
-  {label:'50 / 50 split',                                                          weight: 25},
+  {label:'50-50 split',                                                          weight: 25},
   {label:'Eddie pays 💸',                                                          weight: 35},
   {label:'Ellie pays 😬',                                                          weight:  5},
 
@@ -376,7 +376,7 @@ const PAY_SEGMENTS = [
   {label:'🧾 Split the bill, split the love (aww math is romantic now)',           weight: 15},
   {label:'✂️ Half and half — just like the drama in our relationship',            weight: 25},
   {label:'🤝 We both pay. Equality wins today.',                                   weight: 22},
-  {label:'🧮 Let’s go 50/50, and then 100% dessert',                               weight: 19},
+  {label:'🧮 Let’s go 50-50, and then 100% dessert',                               weight: 19},
   {label:'🐹 Split the bill… but Ellie pays ₩1 more because she\'s the adult here', weight: 20},
   {label:'📉 It’s a financial crisis. We split.',                                  weight: 25},
   {label:'⚖️ Both of us pay. Justice has been served.',                            weight:  5},
