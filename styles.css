@@ -480,14 +480,15 @@ h2 {
 #pay-overlay            { z-index: 11000; }
 #pay-overlay .box       { position: relative; }   /* so the arrow stays */
 
-/* ===== Bill‑wheel pointer ==================================== */
-.wheel-pointer {
-  position: absolute;
-  top: calc(50% - 172px);   /* move down until the tip touches the rim      */
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 32px;          /* the little 🎉 you’re using */
-  pointer-events: none;
-  z-index: 5;
+/* == Bill‑wheel pointer (overlay) ================================ */
+#pay-overlay .wheel-pointer{
+  position:absolute;
+  left:50%;
+  top:calc(50% - 170px);   /* 150 px radius + 20 px tip height         */
+  transform:translateX(-50%);
+  font-size:32px;          /* ▼ size */
+  color:#ff2e75;
+  pointer-events:none;
+  z-index:5;
 }
 
