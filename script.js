@@ -372,23 +372,25 @@ function makeResultCard(r){
     <p>Price: ₩${r.avgCost.toLocaleString()}</p>
     <p>Time: ${r.open || '—'} – ${r.close || '—'}</p>
     <p class="avg-stars">
-    ${ renderStars( avgString(r.ellieStars, r.eddieStars) ) }
-    <span class="toggle">▼</span>
-     </p>
-      <div class="stars-detail hidden">
+      ${ renderStars( avgString(r.ellieStars, r.eddieStars) ) }
+      <span class="toggle">▼</span>
+    </p>
+    ${r.url ? `<p><a href="${r.url}" target="_blank">📍 View on Naver</a></p>` : ''}
+    <div class="stars-detail hidden">
       <p>Ellie’s stars: ${ renderStars(r.ellieStars) }</p>
       <p>Eddie’s stars: ${ renderStars(r.eddieStars) }</p>
-      </div>
+    </div>
   `;
   const detail = div.querySelector('.stars-detail');
-const toggle = div.querySelector('.toggle');
-div.querySelector('.avg-stars').onclick = () => {
-  detail.classList.toggle('hidden');
-  toggle.textContent = detail.classList.contains('hidden') ? '▼' : '▲';
-};
+  const toggle = div.querySelector('.toggle');
+  div.querySelector('.avg-stars').onclick = () => {
+    detail.classList.toggle('hidden');
+    toggle.textContent = detail.classList.contains('hidden') ? '▼' : '▲';
+  };
 
   return div;
 }
+
 
 /* -------------------------------------------------- RANDOM PICK ---- */
 function showRandom(area, level){
